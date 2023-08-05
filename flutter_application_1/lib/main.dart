@@ -43,9 +43,16 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Task extends StatelessWidget {
+class Task extends StatefulWidget {
   final String nome;
   const Task(this.nome, {super.key});
+
+  @override
+  State<Task> createState() => _TaskState();
+}
+
+class _TaskState extends State<Task> {
+  int nivel = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -57,39 +64,56 @@ class Task extends StatelessWidget {
             color: Colors.blue,
             height: 140,
           ),
-          Container(
-            color: Colors.white,
-            height: 100,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  color: Colors.black26,
-                  width: 72,
-                  height: 100,
-                ),
-                Container(
-                  width: 200,
-                  child: Text(
-                    nome,
-                    style: TextStyle(
-                      fontSize: 20,
-                      overflow: TextOverflow.ellipsis,
+          Column(
+            children: [
+              Container(
+                color: Colors.white,
+                height: 100,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      color: Colors.black26,
+                      width: 72,
+                      height: 100,
                     ),
-                  ),
+                    Container(
+                      width: 200,
+                      child: Text(
+                        widget.nome,
+                        style: TextStyle(
+                          fontSize: 20,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(Colors.blueAccent)),
+                      onPressed: () {
+                        setState(() {
+                          nivel++;
+                        });
+
+                        print(nivel);
+                      },
+                      child: Icon(
+                        Icons.arrow_drop_up_rounded,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
                 ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStatePropertyAll(Colors.blueAccent)),
-                  onPressed: () {},
-                  child: Icon(
-                    Icons.arrow_drop_up_rounded,
-                    color: Colors.white,
-                  ),
-                )
-              ],
-            ),
+              ),
+              Text(
+                'Nível: $nivel',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              )
+            ],
           ),
         ]),
       ),
