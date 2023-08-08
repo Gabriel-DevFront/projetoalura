@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool opacidade = true;
 
   // This widget is the root of your application.
   @override
@@ -20,38 +28,53 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           leading: Container(),
-          backgroundColor: Colors.blue[400],
+          backgroundColor: Colors.indigo[900],
           shadowColor: Colors.black,
           elevation: 5,
-          title: const Text('Tarefas'),
+          title: Text(
+            'Tarefas',
+            style: GoogleFonts.oswald(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+                color: Colors.grey[200]),
+          ),
         ),
-        body: ListView(
-          children: [
-            Task(
-                'Aprender Flutter',
-                'https://miro.medium.com/v2/resize:fit:1400/1*W1aGmyVwe5kKGuyTvzdUEg.png',
-                4),
-            Task(
-                'Ler',
-                'https://sejapregador.com/wp-content/uploads/2018/02/ler-a-biblia.png',
-                2),
-            Task(
-                'Trabalhar',
-                'https://img.freepik.com/vetores-premium/entregador-montando-a-ilustracao-de-scooter-vermelho_9845-14.jpg?w=2000',
-                5),
-            Task(
-                'Malhar',
-                'https://static.vecteezy.com/ti/vetor-gratis/p3/8222655-fisiculturismo-logo-gratis-vetor.jpg',
-                4),
-            Task(
-                'Praticar estudos',
-                'https://img.freepik.com/vetores-gratis/ilustracao-do-conceito-de-aprendizagem_114360-6186.jpg?size=626&ext=jpg',
-                4),
-          ],
+        body: AnimatedOpacity(
+          opacity: opacidade ? 1 : 0,
+          duration: Duration(milliseconds: 800),
+          child: ListView(
+            children: [
+              Task(
+                  'Aprender Flutter',
+                  'https://miro.medium.com/v2/resize:fit:1400/1*W1aGmyVwe5kKGuyTvzdUEg.png',
+                  4),
+              Task(
+                  'Ler',
+                  'https://sejapregador.com/wp-content/uploads/2018/02/ler-a-biblia.png',
+                  2),
+              Task(
+                  'Trabalhar',
+                  'https://img.freepik.com/vetores-premium/entregador-montando-a-ilustracao-de-scooter-vermelho_9845-14.jpg?w=2000',
+                  5),
+              Task(
+                  'Malhar',
+                  'https://static.vecteezy.com/ti/vetor-gratis/p3/8222655-fisiculturismo-logo-gratis-vetor.jpg',
+                  4),
+              Task(
+                  'Praticar estudos',
+                  'https://img.freepik.com/vetores-gratis/ilustracao-do-conceito-de-aprendizagem_114360-6186.jpg?size=626&ext=jpg',
+                  4),
+            ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          backgroundColor: Colors.purple[100],
+          onPressed: () {
+            setState(() {
+              opacidade = !opacidade;
+            });
+          },
+          backgroundColor: Colors.indigo[900],
+          child: Icon(Icons.remove_red_eye),
         ),
       ),
     );
@@ -117,10 +140,8 @@ class _TaskState extends State<Task> {
                           width: 200,
                           child: Text(
                             widget.nome,
-                            style: TextStyle(
-                              fontSize: 20,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                            style: GoogleFonts.openSans(
+                                fontSize: 20, color: Colors.grey[800]),
                           ),
                         ),
                         Row(
