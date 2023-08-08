@@ -19,7 +19,9 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: Colors.blue[400],
+          shadowColor: Colors.black,
+          elevation: 5,
           title: const Text('Tarefas'),
         ),
         body: ListView(
@@ -61,8 +63,8 @@ class _TaskState extends State<Task> {
       child: Container(
         child: Stack(children: [
           Container(
-            color: Colors.blue,
-            height: 140,
+            color: Colors.blue[400],
+            height: 130,
           ),
           Column(
             children: [
@@ -73,7 +75,7 @@ class _TaskState extends State<Task> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      color: Colors.black26,
+                      color: Colors.grey.shade600,
                       width: 72,
                       height: 100,
                     ),
@@ -90,7 +92,7 @@ class _TaskState extends State<Task> {
                     ElevatedButton(
                       style: ButtonStyle(
                           backgroundColor:
-                              MaterialStatePropertyAll(Colors.blueAccent)),
+                              MaterialStatePropertyAll(Colors.blue[500])),
                       onPressed: () {
                         setState(() {
                           nivel++;
@@ -112,7 +114,7 @@ class _TaskState extends State<Task> {
                   color: Colors.white,
                   fontSize: 16,
                 ),
-              )
+              ),
             ],
           ),
         ]),
