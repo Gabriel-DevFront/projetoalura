@@ -14,11 +14,12 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme:
-            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 63, 7, 109)),
-        useMaterial3: true,
+            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 48, 27, 172)),
+        useMaterial3: false,
       ),
       home: Scaffold(
         appBar: AppBar(
+          leading: Container(),
           backgroundColor: Colors.blue[400],
           shadowColor: Colors.black,
           elevation: 5,
@@ -26,14 +27,26 @@ class MyApp extends StatelessWidget {
         ),
         body: ListView(
           children: [
-            Task('Aprender Flutter'),
-            Task('Andar de Bike'),
-            Task('Meditar'),
-            Task('Meditar'),
-            Task('Meditar'),
-            Task('Meditar'),
-            Task('Meditar'),
-            Task('Meditar'),
+            Task(
+                'Aprender Flutter',
+                'https://miro.medium.com/v2/resize:fit:1400/1*W1aGmyVwe5kKGuyTvzdUEg.png',
+                4),
+            Task(
+                'Ler',
+                'https://sejapregador.com/wp-content/uploads/2018/02/ler-a-biblia.png',
+                2),
+            Task(
+                'Trabalhar',
+                'https://img.freepik.com/vetores-premium/entregador-montando-a-ilustracao-de-scooter-vermelho_9845-14.jpg?w=2000',
+                5),
+            Task(
+                'Malhar',
+                'https://static.vecteezy.com/ti/vetor-gratis/p3/8222655-fisiculturismo-logo-gratis-vetor.jpg',
+                4),
+            Task(
+                'Praticar estudos',
+                'https://img.freepik.com/vetores-gratis/ilustracao-do-conceito-de-aprendizagem_114360-6186.jpg?size=626&ext=jpg',
+                4),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -47,7 +60,10 @@ class MyApp extends StatelessWidget {
 
 class Task extends StatefulWidget {
   final String nome;
-  const Task(this.nome, {super.key});
+  final String foto;
+  final int dificuldade;
+
+  const Task(this.nome, this.foto, this.dificuldade, {super.key});
 
   @override
   State<Task> createState() => _TaskState();
@@ -63,57 +79,142 @@ class _TaskState extends State<Task> {
       child: Container(
         child: Stack(children: [
           Container(
-            color: Colors.blue[400],
-            height: 130,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              color: Colors.blue[400],
+            ),
+            height: 140,
           ),
           Column(
             children: [
+              //Container branco principal
               Container(
-                color: Colors.white,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5)),
                 height: 100,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    //Imagem
                     Container(
-                      color: Colors.grey.shade600,
-                      width: 72,
+                      color: Colors.white,
+                      width: 100,
                       height: 100,
-                    ),
-                    Container(
-                      width: 200,
-                      child: Text(
-                        widget.nome,
-                        style: TextStyle(
-                          fontSize: 20,
-                          overflow: TextOverflow.ellipsis,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: Image.network(
+                          widget.foto,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                    ElevatedButton(
-                      style: ButtonStyle(
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 200,
+                          child: Text(
+                            widget.nome,
+                            style: TextStyle(
+                              fontSize: 20,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.star_rounded,
+                                size: 15,
+                                color: (widget.dificuldade >= 1)
+                                    ? Colors.blue
+                                    : Colors.blue[100]),
+                            Icon(Icons.star_rounded,
+                                size: 15,
+                                color: (widget.dificuldade >= 2)
+                                    ? Colors.blue
+                                    : Colors.blue[100]),
+                            Icon(Icons.star_rounded,
+                                size: 15,
+                                color: (widget.dificuldade >= 3)
+                                    ? Colors.blue
+                                    : Colors.blue[100]),
+                            Icon(
+                              Icons.star_rounded,
+                              size: 15,
+                              color: (widget.dificuldade >= 4)
+                                  ? Colors.blue
+                                  : Colors.blue[100],
+                            ),
+                            Icon(Icons.star_rounded,
+                                size: 15,
+                                color: (widget.dificuldade >= 5)
+                                    ? Colors.blue
+                                    : Colors.blue[100]),
+                          ],
+                        )
+                      ],
+                    ),
+                    Container(
+                      width: 52,
+                      height: 52,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
                           backgroundColor:
-                              MaterialStatePropertyAll(Colors.blue[500])),
-                      onPressed: () {
-                        setState(() {
-                          nivel++;
-                        });
+                              MaterialStatePropertyAll(Colors.blue[500]),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            nivel++;
+                          });
 
-                        print(nivel);
-                      },
-                      child: Icon(
-                        Icons.arrow_drop_up_rounded,
-                        color: Colors.white,
+                          print(nivel);
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Icon(
+                              Icons.arrow_drop_up_rounded,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              'Up',
+                              style: TextStyle(fontSize: 10),
+                            ),
+                          ],
+                        ),
                       ),
                     )
                   ],
                 ),
               ),
-              Text(
-                'Nível: $nivel',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 200,
+                      child: LinearProgressIndicator(
+                        color: Colors.blue[300],
+                        value: (widget.dificuldade > 0)
+                            ? (nivel / widget.dificuldade) / 10
+                            : 1,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      'Nível: $nivel',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
